@@ -79,7 +79,7 @@ jobs:
   
     - name: Configuration Customization - Build_OP_Linksys_EA7500V2
       env:
-        CONFIG_FILE: 'linksys_ea7500v2.config'
+        CONFIG_FILE: 'config/linksys_ea7500v2.config'
       run: |
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x ./customize.sh && ./customize.sh
