@@ -22,6 +22,7 @@ on:
   push:
     tags:
       - '*'
+
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
@@ -54,7 +55,7 @@ jobs:
         cd openwrt
         echo "src-git ssrp https://github.com/fw876/helloworld.git" >> ./feeds.conf.default
 
-    - name: Update & Install feeds
+    - name: Update feeds
       working-directory: ./openwrt
       run: |
         ./scripts/feeds update -a
@@ -70,6 +71,7 @@ jobs:
       working-directory: ./openwrt
       run: |
         echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+        echo "OPENWRT_VERSION=$(./scripts/getver.sh)" >> $GITHUB_ENV
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
 
@@ -89,39 +91,15 @@ jobs:
     - name: Prepare artifact
       run: |
         mkdir -p ./artifact/firmware
-        mkdir -p ./artifact/package
-        mkdir -p ./artifact/buildinfo
-        rm -rf $(find ./openwrt/bin/targets/ -type d -name "packages")
         cp -rf $(find ./openwrt/bin/targets/ -type f) ./artifact/firmware/
-        cp -rf $(find ./openwrt/bin/packages/ -type f -name "*.ipk") ./artifact/package/
-        cp -rf $(find ./openwrt/bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
-
-    - name: Deliver buildinfo
-      uses: actions/upload-artifact@v2
-      with:
-        name: OpenWrt_buildinfo${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        path: ./artifact/buildinfo/
-
-    - name: Deliver package
-      uses: actions/upload-artifact@v2
-      with:
-        name: OpenWrt_package${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        path: ./artifact/package/
-
-    - name: Deliver firmware
-      uses: actions/upload-artifact@v2
-      with:
-        name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
-        path: ./artifact/firmware/
 
     - name: Deliver all
       uses: actions/upload-artifact@v2
       with:
-        name: OpenWrt_All${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+        name: OpenWrt_${{ env.OPENWRT_VERSION }}_${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: ./openwrt/bin
 
     - name: Upload release asset
-      if: github.event == 'release'
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.YOURTOKEN }}

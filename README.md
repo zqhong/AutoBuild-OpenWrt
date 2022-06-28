@@ -6,9 +6,13 @@
 2. 切换到 lede 项目中，`make menuconfig`：选择你的机型，需要的驱动、软件等
 3. `./scripts/diffconfig.sh > diffconfig`：根据`.config`生成差异配置
 4. 复制`diffconfig`文件到当前项目 config 目录下匹配机型的 config 文件，比如：`config/linksys_ea7500v2.config`
-5. GitHub action 触发条件
-   1. 点击 GitHub action 对应的 [workflow](https://github.com/zqhong/AutoBuild-OpenWrt/actions/workflows/Build_OP_Linksys_EA7500V2.yml)，点击【Run Workflow】按钮手动触发
-   2. 创建标签/发行版
+5. GitHub action
+    * 触发条件
+      1. 点击 GitHub action 对应的 [workflow](https://github.com/zqhong/AutoBuild-OpenWrt/actions/workflows/Build_OP_Linksys_EA7500V2.yml)，点击【Run Workflow】按钮手动触发
+      2. 创建标签/发行版
+    * 文件名规则。示例：`OpenWrt_r4608-ddc2b246d_linksys_ea7500-v2_202206280713`
+      * OpenWrt_version_device_date
+        * 版本：REV-commit。示例：`r4608-ddc2b246d`，代表：第4628条commit，最后一条 Commit ID 为[ddc2b246d](https://github.com/coolsnowwolf/lede/commit/ddc2b246d)
 
 ## 固件信息
 
