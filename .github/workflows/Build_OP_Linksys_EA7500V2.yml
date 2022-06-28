@@ -2,7 +2,7 @@
 # Description: Build OpenWrt using GitHub Actions
 # Lisence: MIT
 # Author: eSirPlayground
-# Youtube Channel: https://goo.gl/fvkdwm 
+# Youtube Channel: https://goo.gl/fvkdwm
 #=================================================
 
 name: Build_OP_Linksys_EA7500V2
@@ -34,28 +34,13 @@ jobs:
       run: |
         set +e
         docker rmi `docker images -q`
-        echo "Deleting files, please wait ..."
-        sudo rm -rf \
-          /usr/share/dotnet \
-          /etc/mysql \
-          /etc/php
-        sudo -E apt-get -y purge \
-          azure-cli \
-          ghc* \
-          zulu* \
-          hhvm \
-          llvm* \
-          firefox \
-          google* \
-          dotnet* \
-          powershell \
-          openjdk* \
-          mysql* \
-          php*
+        sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d /usr/local/lib/android
+        sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* adoptopenjdk* mysql* php* mongodb* dotnet* moby* snapd* || true
         sudo -E apt-get update
-        sudo -E apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 python2.7 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler g++-multilib antlr3 gperf wget curl swig rsync
+        sudo -E apt-get -y install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch python3 unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs gcc-multilib g++-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler antlr3 gperf swig
         sudo -E apt-get -y autoremove --purge
         sudo -E apt-get clean
+
     - name: Clone source code
       env: 
         REPO_URL: https://github.com/coolsnowwolf/lede
@@ -64,17 +49,13 @@ jobs:
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
         echo "src-git ssrp https://github.com/fw876/helloworld.git" >> ./feeds.conf.default
+
     - name: Update & Install feeds
       working-directory: ./openwrt
       run: |
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
-    #- name: Import external feeds - JerryKuKu Argon
-    #  working-directory: ./openwrt
-    #  run: |
-    #    git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon-jerrykuku   
-  
     - name: Configuration Customization - Build_OP_Linksys_EA7500V2
       env:
         CONFIG_FILE: 'config/linksys_ea7500v2.config'
@@ -86,20 +67,54 @@ jobs:
     - name: Download package
       working-directory: ./openwrt
       run: |
-        make download -j$(nproc)
+        make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
+
     - name: Build firmware
       working-directory: ./openwrt
       run: |
         echo -e "$(nproc) thread build."
         make -j$(nproc) V=s
+
     - name: Generate artifact name
       id: generate-name
       run: |
         echo "::set-output name=lede::${{ github.event.repository.name }}.${{ github.ref_name }}.${{ github.run_id }}.zip"
-    - name : Upload artifact
-      uses: actions/upload-artifact@master
+
+    - name: Prepare artifact
+      run: |
+        mkdir -p ./artifact/firmware
+        mkdir -p ./artifact/package
+        mkdir -p ./artifact/buildinfo
+        rm -rf $(find ./openwrt/bin/targets/ -type d -name "packages")
+        cp -rf $(find ./openwrt/bin/targets/ -type f) ./artifact/firmware/
+        cp -rf $(find ./openwrt/bin/packages/ -type f -name "*.ipk") ./artifact/package/
+        cp -rf $(find ./openwrt/bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
+
+    - name: Deliver buildinfo
+      uses: actions/upload-artifact@v2
       with:
-        name: ${{ steps.generate-name.outputs.artifact }}
-        path: openwrt/bin
+        name: OpenWrt_buildinfo
+        path: ./artifact/buildinfo/
+
+    - name: Deliver package
+      uses: actions/upload-artifact@v2
+      with:
+        name: OpenWrt_package
+        path: ./artifact/package/
+
+    - name: Deliver firmware
+      uses: actions/upload-artifact@v2
+      with:
+        name: OpenWrt_firmware
+        path: ./bin/targets/
+
+    - name: Upload release asset
+      if: github.event == 'release'
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.YOURTOKEN }}
+        file: ./artifact/firmware/*
+        tag: ${{ github.ref }}
+        file_glob: true

@@ -4,6 +4,34 @@
 
 1. 参考[coolsnowwolf/lede](https://github.com/coolsnowwolf/lede)的项目说明，配置好编译环境，生成`.config`文件
 2. 参考[esirplayground/AutoBuild-OpenWrt](https://github.com/esirplayground/AutoBuild-OpenWrt)的项目说明，配置好 GitHub action，即`.github/workflows/*.yml`文件。
+    * 相关
+      * https://github.com/coolsnowwolf/lede/blob/master/.github/workflows/openwrt-ci.yml
+      * https://github.com/esirplayground/AutoBuild-OpenWrt/blob/master/.github/workflows/Build_OP_Redmi_AC2100.yml
+
+## 固件信息
+
+* 默认登陆IP 192.168.1.1
+* 密码 password
+
+## 自定义（customize.sh）
+
+根据自身情况调整，默认不启用。
+
+### 修改默认 IP 为 192.168.5.1
+
+```bash
+sed -i 's/192.168.1.1/192.168.5.1/g' openwrt/package/base-files/files/bin/config_generate
+```
+
+相关文件：https://github.com/coolsnowwolf/lede/blob/master/package/base-files/files/bin/config_generate
+
+### 设置空密码（默认密码为 password）
+
+```bash
+sed -i 's/$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.//g' openwrt/package/lean/default-settings/files/zzz-default-settings
+```
+
+相关文件：https://github.com/coolsnowwolf/lede/blob/master/package/lean/default-settings/files/zzz-default-settings
 
 ## 设备
 
@@ -59,4 +87,5 @@
 
 ## 编译
 
+* [Quick image building guide - OpenWrt Wiki](https://openwrt.org/docs/guide-developer/toolchain/beginners-build-guide)
 * [OpenWrt 编译 LuCI -> Applications 添加插件应用说明-L大【2021.11.18】](https://www.right.com.cn/forum/thread-344825-1-1.html)
