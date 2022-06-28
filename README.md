@@ -4,15 +4,16 @@
 
 1. 参考[coolsnowwolf/lede](https://github.com/coolsnowwolf/lede)的项目说明，配置好编译环境，生成`.config`文件
 2. 参考[esirplayground/AutoBuild-OpenWrt](https://github.com/esirplayground/AutoBuild-OpenWrt)的项目说明，配置好 GitHub action，即`.github/workflows/*.yml`文件。
-    * 相关
+    * OpenWrt GitHub action 相关
       * https://github.com/coolsnowwolf/lede/blob/master/.github/workflows/openwrt-ci.yml
       * https://github.com/esirplayground/AutoBuild-OpenWrt/blob/master/.github/workflows/Build_OP_Redmi_AC2100.yml
+      * https://github.com/P3TERX/Actions-OpenWrt/blob/main/.github/workflows/build-openwrt.yml
 3. 示例
    1. 配置好 lede 的开发环境，切换到 lede 项目中
    2. `make menuconfig`：选择你的机型，需要的驱动、软件等
    3. `./scripts/diffconfig.sh > diffconfig`：根据`.config`生成差异配置
    4. 复制`diffconfig`文件到当前项目 config 下匹配机型的 config 文件
-   5. 点击 GitHub action 对应的 workflow，手动触发
+   5. 点击 GitHub action 对应的 [workflow](https://github.com/zqhong/AutoBuild-OpenWrt/actions/workflows/Build_OP_Linksys_EA7500V2.yml)，点击【Run Workflow】按钮手动触发
 
 ## 固件信息
 
