@@ -20,6 +20,11 @@ on:
           - warning
           - debug
 
+env:
+  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_BRANCH: master
+  DIFF_CONFIG_FILE: 'config/linksys_ea7500v2.config'
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -42,9 +47,6 @@ jobs:
         sudo -E apt-get clean
 
     - name: Clone source code
-      env: 
-        REPO_URL: https://github.com/coolsnowwolf/lede
-        REPO_BRANCH: master
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
@@ -57,10 +59,8 @@ jobs:
         ./scripts/feeds install -a
 
     - name: Configuration Customization
-      env:
-        CONFIG_FILE: 'config/linksys_ea7500v2.config'
       run: |
-        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        [ -e $DIFF_CONFIG_FILE ] && mv $DIFF_CONFIG_FILE openwrt/.config
         chmod +x ./customize.sh && ./customize.sh
         cd openwrt && make defconfig
         
@@ -103,4 +103,10 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: OpenWrt_firmware
-        path: ./bin/targets/
+        path: ./artifact/firmware/
+
+    - name: Deliver all
+      uses: actions/upload-artifact@v2
+      with:
+        name: OpenWrt_All
+        path: ./openwrt/bin
