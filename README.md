@@ -7,11 +7,17 @@
     * 相关
       * https://github.com/coolsnowwolf/lede/blob/master/.github/workflows/openwrt-ci.yml
       * https://github.com/esirplayground/AutoBuild-OpenWrt/blob/master/.github/workflows/Build_OP_Redmi_AC2100.yml
+3. 示例
+   1. 配置好 lede 的开发环境，切换到 lede 项目中
+   2. `make menuconfig`：选择你的机型，需要的驱动、软件等
+   3. `./scripts/diffconfig.sh > diffconfig`：根据`.config`生成差异配置
+   4. 复制`diffconfig`文件到当前项目 config 下匹配机型的 config 文件
+   5. 点击 GitHub action 对应的 workflow，手动触发
 
 ## 固件信息
 
-* 默认登陆IP 192.168.1.1
-* 密码 password
+* 默认登陆 IP：192.168.1.1
+* 密码：password
 
 ## 自定义（customize.sh）
 
