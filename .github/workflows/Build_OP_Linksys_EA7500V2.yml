@@ -12,14 +12,8 @@ on:
     types: [published]
 
   push:
-    branches:
-      - master
-
   schedule:
-    - cron: 0 8 * * 5
-  
-  #watch:
-  #  types: [started]
+    - cron: 0 0 * * *
 
 jobs:
   build:
@@ -95,8 +89,12 @@ jobs:
       run: |
         echo -e "$(nproc) thread build."
         make -j$(nproc) V=s
+    - name: Generate artifact name
+      id: generate-name
+      run: |
+        echo "::set-output name=lede::${{ github.event.repository.name }}.${{ github.ref_name }}.${{ github.run_id }}.zip"
     - name : Upload artifact
       uses: actions/upload-artifact@master
       with:
-        name: OpenWrt
+        name: ${{ steps.generate-name.outputs.artifact }}
         path: openwrt/bin
