@@ -7,13 +7,18 @@
 
 name: Build_OP_Linksys_EA7500V2
 
-on: 
-  release:
-    types: [published]
-
-  push:
-  schedule:
-    - cron: 0 0 * * *
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
 
 jobs:
   build:
