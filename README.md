@@ -76,20 +76,23 @@ sed -i 's/$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.//g' openwrt/package/lean/default-se
 
 相关文件：https://github.com/coolsnowwolf/lede/blob/master/package/lean/default-settings/files/zzz-default-settings
 
+## 参考
 
-#### 参考
-
-* [【20220502更新】领势EA7500V2开源与闭源驱动openwrt固件](https://www.right.com.cn/forum/thread-4103473-1-1.html)
-* [mt7615 还有必要使用闭源版本驱动吗？](https://github.com/coolsnowwolf/lede/issues/6102)
-* [How to use mt driver instead of mt76?](https://github.com/coolsnowwolf/lede/issues/5897)
-* https://github.com/sherlsenlinmu/Actions-OpenWrt/blob/main/.github/workflows/EA7500V2.yml
-* https://github.com/althea-net/althea-firmware/blob/master/config/ea7500v2
-* https://downloads.openwrt.org/releases/21.02.3/targets/ramips/mt7621/config.buildinfo
-* https://openwrt.org/toh/linksys/linksys_ea7500_v2
+* 编译
+    * [Quick image building guide - OpenWrt Wiki](https://openwrt.org/docs/guide-developer/toolchain/beginners-build-guide)
+    * [OpenWrt 编译 LuCI -> Applications 添加插件应用说明-L大【2021.11.18】](https://www.right.com.cn/forum/thread-344825-1-1.html)
+* 设备
+    * Linksys EA7500 V2
+        * https://github.com/sherlsenlinmu/Actions-OpenWrt/blob/main/.github/workflows/EA7500V2.yml
+        * https://github.com/althea-net/althea-firmware/blob/master/config/ea7500v2
+        * https://downloads.openwrt.org/releases/21.02.3/targets/ramips/mt7621/config.buildinfo
+        * https://openwrt.org/toh/linksys/linksys_ea7500_v2
+* 开源驱动与闭源驱动
+  * mt7615
+    * [【20220502更新】领势EA7500V2开源与闭源驱动openwrt固件](https://www.right.com.cn/forum/thread-4103473-1-1.html)
+    * [mt7615 还有必要使用闭源版本驱动吗？](https://github.com/coolsnowwolf/lede/issues/6102)
+    * [How to use mt driver instead of mt76?](https://github.com/coolsnowwolf/lede/issues/5897)
 * OpenWrt GitHub action 相关
     * https://github.com/coolsnowwolf/lede/blob/master/.github/workflows/openwrt-ci.yml
     * https://github.com/esirplayground/AutoBuild-OpenWrt/blob/master/.github/workflows/Build_OP_Redmi_AC2100.yml
     * https://github.com/P3TERX/Actions-OpenWrt/blob/main/.github/workflows/build-openwrt.yml
-* 编译
-  * [Quick image building guide - OpenWrt Wiki](https://openwrt.org/docs/guide-developer/toolchain/beginners-build-guide)
-  * [OpenWrt 编译 LuCI -> Applications 添加插件应用说明-L大【2021.11.18】](https://www.right.com.cn/forum/thread-344825-1-1.html)
