@@ -12,7 +12,9 @@
       2. 创建标签/发行版
     * 文件名规则。示例：`OpenWrt_r4608-ddc2b246d_linksys_ea7500-v2_202206280713`
       * OpenWrt_version_device_date
-        * 版本：REV-commit。示例：`r4608-ddc2b246d`，代表：第4628条commit，最后一条 Commit ID 为[ddc2b246d](https://github.com/coolsnowwolf/lede/commit/ddc2b246d)
+        * version：OpenWrt 版本号。格式为：REV-commit。示例：`r4608-ddc2b246d`，代表：第4628条commit，最后一条 Commit ID 为[ddc2b246d](https://github.com/coolsnowwolf/lede/commit/ddc2b246d)
+        * device：硬件设备名称
+        * date：固件编译的日期，格式：年月日时分
 
 ## 固件信息
 
