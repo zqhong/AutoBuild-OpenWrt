@@ -4,10 +4,6 @@
 
 1. 参考[coolsnowwolf/lede](https://github.com/coolsnowwolf/lede)的项目说明，配置好编译环境，生成`.config`文件
 2. 参考[esirplayground/AutoBuild-OpenWrt](https://github.com/esirplayground/AutoBuild-OpenWrt)的项目说明，配置好 GitHub action，即`.github/workflows/*.yml`文件。
-    * OpenWrt GitHub action 相关
-      * https://github.com/coolsnowwolf/lede/blob/master/.github/workflows/openwrt-ci.yml
-      * https://github.com/esirplayground/AutoBuild-OpenWrt/blob/master/.github/workflows/Build_OP_Redmi_AC2100.yml
-      * https://github.com/P3TERX/Actions-OpenWrt/blob/main/.github/workflows/build-openwrt.yml
 3. 示例
    1. 配置好 lede 的开发环境，切换到 lede 项目中
    2. `make menuconfig`：选择你的机型，需要的驱动、软件等
@@ -21,26 +17,6 @@
 
 * 默认登陆 IP：192.168.1.1
 * 密码：password
-
-## 自定义（customize.sh）
-
-根据自身情况调整，默认不启用。
-
-### 修改默认 IP 为 192.168.5.1
-
-```bash
-sed -i 's/192.168.1.1/192.168.5.1/g' openwrt/package/base-files/files/bin/config_generate
-```
-
-相关文件：https://github.com/coolsnowwolf/lede/blob/master/package/base-files/files/bin/config_generate
-
-### 设置空密码（默认密码为 password）
-
-```bash
-sed -i 's/$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.//g' openwrt/package/lean/default-settings/files/zzz-default-settings
-```
-
-相关文件：https://github.com/coolsnowwolf/lede/blob/master/package/lean/default-settings/files/zzz-default-settings
 
 ## 设备
 
@@ -71,7 +47,7 @@ sed -i 's/$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.//g' openwrt/package/lean/default-se
   * kmod-mt7615d_dbdc：只适用于 mt7615dn
   * luci-app-mtwifi：LuCI support for mt wifi driver。（为闭源驱动提供设置界面）
   * EA7500 V2 默认使用开源驱动，参考：https://github.com/coolsnowwolf/lede/blob/master/target/linux/ramips/image/mt7621.mk#L932-L938
-      * 不知道怎么选择闭源驱动的时候，可以参考上面的链接，参考特定机型的设置。
+      * 开源/闭源驱动的设置，可以参考上面的链接俩面特定机型的设置。
       * 默认编译结果（开源驱动）
         * kmod-mt76-connac - 5.4.199+2022-06-24-b6e865e2-4
         * kmod-mt76-core - 5.4.199+2022-06-24-b6e865e2-4
@@ -83,6 +59,27 @@ sed -i 's/$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.//g' openwrt/package/lean/default-se
         * luci-app-mtwifi - 1-16
         * mt_wifi - 1-1
 
+## 自定义（customize.sh）
+
+根据自身情况调整，默认不启用。
+
+### 修改默认 IP 为 192.168.5.1
+
+```bash
+sed -i 's/192.168.1.1/192.168.5.1/g' openwrt/package/base-files/files/bin/config_generate
+```
+
+相关文件：https://github.com/coolsnowwolf/lede/blob/master/package/base-files/files/bin/config_generate
+
+### 设置空密码（默认密码为 password）
+
+```bash
+sed -i 's/$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.//g' openwrt/package/lean/default-settings/files/zzz-default-settings
+```
+
+相关文件：https://github.com/coolsnowwolf/lede/blob/master/package/lean/default-settings/files/zzz-default-settings
+
+
 #### 参考
 
 * [【20220502更新】领势EA7500V2开源与闭源驱动openwrt固件](https://www.right.com.cn/forum/thread-4103473-1-1.html)
@@ -92,9 +89,10 @@ sed -i 's/$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.//g' openwrt/package/lean/default-se
 * https://github.com/althea-net/althea-firmware/blob/master/config/ea7500v2
 * https://downloads.openwrt.org/releases/21.02.3/targets/ramips/mt7621/config.buildinfo
 * https://openwrt.org/toh/linksys/linksys_ea7500_v2
-
-
-## 编译
-
-* [Quick image building guide - OpenWrt Wiki](https://openwrt.org/docs/guide-developer/toolchain/beginners-build-guide)
-* [OpenWrt 编译 LuCI -> Applications 添加插件应用说明-L大【2021.11.18】](https://www.right.com.cn/forum/thread-344825-1-1.html)
+* OpenWrt GitHub action 相关
+    * https://github.com/coolsnowwolf/lede/blob/master/.github/workflows/openwrt-ci.yml
+    * https://github.com/esirplayground/AutoBuild-OpenWrt/blob/master/.github/workflows/Build_OP_Redmi_AC2100.yml
+    * https://github.com/P3TERX/Actions-OpenWrt/blob/main/.github/workflows/build-openwrt.yml
+* 编译
+  * [Quick image building guide - OpenWrt Wiki](https://openwrt.org/docs/guide-developer/toolchain/beginners-build-guide)
+  * [OpenWrt 编译 LuCI -> Applications 添加插件应用说明-L大【2021.11.18】](https://www.right.com.cn/forum/thread-344825-1-1.html)
