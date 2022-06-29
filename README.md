@@ -16,11 +16,21 @@
         * device：硬件设备名称
         * date：固件编译的日期，格式：年月日时分
 
-## 固件信息
+## 固件
+
+### 基本信息
 
 * 默认登陆 IP：192.168.1.1
 * 用户名：root
 * 密码：password
+
+### 固件格式（Image formats）
+
+* factory (.img/.bin)：非 openwrt（OEM）固件刷机用
+* sysupgrade ( or trx ): OpenWrt 固件刷机用
+* initramfs: 类似 Linux LiveCD，通常用于测试
+
+参考：[Image formats - OpenWrt Doc](https://openwrt.org/docs/techref/image.format)
 
 ## 设备
 
