@@ -19,6 +19,9 @@ on:
           - info
           - warning
           - debug
+  push:
+    tags:
+      - '*'
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
