@@ -30,8 +30,6 @@
 * sysupgrade ( or trx ): OpenWrt 固件刷机用
 * initramfs: 类似 Linux LiveCD，通常用于测试
 
-
-
 ### 其他
 
 #### 获取选择的 Luci 相关组件的命令
