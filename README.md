@@ -42,15 +42,6 @@ cat .config | grep "CONFIG_PACKAGE_luci" | grep -v "#" | grep -v "zh-cn" | grep 
 
 ## 设备
 
-### [ShareVDI 光秒 G4C](https://m.sharevdi.com/index.php/industrial-pc/firewall-mini-pc/g4c.html)
-
-* Soc：RK3399，双核Cortex-A72(大核) 1.8GHz、四核Cortex-A53(小核) 1.4GHz
-* Flash：TF Card，最高 512GB
-* RAM：1 GB LPDDDR4
-* 网卡：内置 RTL8211E + PCIe 扩展 RTL8111F
-* 网口：双千兆 RJ45 * 2
-* USB：USB 3.0 x 2
-
 ### Linksys EA7500 V2
 
 #### 硬件信息
