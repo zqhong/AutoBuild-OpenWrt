@@ -30,9 +30,28 @@
 * sysupgrade ( or trx ): OpenWrt 固件刷机用
 * initramfs: 类似 Linux LiveCD，通常用于测试
 
+
+
+### 其他
+
+#### 获取选择的 Luci 相关组件的命令
+
+```bash
+cat .config | grep "CONFIG_PACKAGE_luci" | grep -v "#" | grep -v "zh-cn" | grep -v "CONFIG_PACKAGE_luci=y" | grep -v "CONFIG_PACKAGE_luci-base" | sed 's/CONFIG_PACKAGE_/* /g' | sed 's/=y//g' | sort
+```
+
 参考：[Image formats - OpenWrt Doc](https://openwrt.org/docs/techref/image.format)
 
 ## 设备
+
+### [ShareVDI 光秒 G4C](https://m.sharevdi.com/index.php/industrial-pc/firewall-mini-pc/g4c.html)
+
+* Soc：RK3399，双核Cortex-A72(大核) 1.8GHz、四核Cortex-A53(小核) 1.4GHz
+* Flash：TF Card，最高 512GB
+* RAM：1 GB LPDDDR4
+* 网卡：内置 RTL8211E + PCIe 扩展 RTL8111F
+* 网口：双千兆 RJ45 * 2
+* USB：USB 3.0 x 2
 
 ### Linksys EA7500 V2
 
