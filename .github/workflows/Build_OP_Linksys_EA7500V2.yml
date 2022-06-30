@@ -21,8 +21,8 @@ on:
           - debug
 
 env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
-  REPO_BRANCH: master
+  REPO_URL: https://github.com/openwrt/openwrt
+  REPO_BRANCH: openwrt-21.02
   DIFF_CONFIG_FILE: 'config/linksys_ea7500v2.config'
 
 jobs:

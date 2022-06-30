@@ -101,6 +101,24 @@ sed -i 's/$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.//g' openwrt/package/lean/default-se
 
 相关文件：https://github.com/coolsnowwolf/lede/blob/master/package/lean/default-settings/files/zzz-default-settings
 
+## 遇到的问题
+
+### 编译
+
+#### scripts/config/conf: not found
+
+```bash
+make menuconfig
+
+make defconfig
+
+./scripts/diffconfig.sh > diffconfig
+
+cat diffconfig
+```
+
+参考：https://github.com/coolsnowwolf/lede/issues/4954#issuecomment-678725739
+
 ## 参考
 
 * 编译
