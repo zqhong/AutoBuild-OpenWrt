@@ -95,7 +95,7 @@ jobs:
         cp -rf $(find ./openwrt/bin/targets/ -type f) ./artifact/firmware/
 
     - name: Deliver all
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: OpenWrt_${{ env.OPENWRT_VERSION }}_${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: ./openwrt/bin
